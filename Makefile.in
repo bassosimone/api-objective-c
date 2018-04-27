@@ -1,4 +1,4 @@
-.PHONY: all clean install
+.PHONY: all clean install install-strip
 
 INCLUDES = @INCLUDES@
 LIBRARY = libmeasurementkit-objectivec.a
@@ -14,10 +14,14 @@ $(LIBRARY): $(OBJS)
 mk_task.o: mk_task.h mk_task.mm
 	$(COMPILEXX) -o mk_task.o -c mk_task.mm
 
-install:
+install: $(LIBRARY)
 	install -d $(DESTDIR)/$(PREFIX)/include
 	install -m644 mk_task.h $(DESTDIR)/$(PREFIX)/include
 	install -d $(DESTDIR)/$(PREFIX)/lib
 	install -m644 $(LIBRARY) $(DESTDIR)/$(PREFIX)/lib
+
+# TODO(bassosimone): figure out if we can really strip
+install-strip: install
+
 clean:
 	rm -rf -- $(OBJS) $(LIBRARY)
