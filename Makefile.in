@@ -1,15 +1,18 @@
 .PHONY: all clean install
 
+INCLUDES = @INCLUDES@
 LIBRARY = libmeasurementkit-objectivec.a
 OBJS = mk_task.o
 PREFIX = @PREFIX@
+
+COMPILEXX = $(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wall -Wextra $(INCLUDES)
 
 all: $(LIBRARY)
 
 $(LIBRARY): $(OBJS)
 	$(AR) rv $(LIBRARY) $(OBJS)
 mk_task.o: mk_task.h mk_task.mm
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wall -Wextra -o mk_task.o -c mk_task.mm
+	$(COMPILEXX) -o mk_task.o -c mk_task.mm
 
 install:
 	install -d $(DESTDIR)/$(PREFIX)/include

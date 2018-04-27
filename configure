@@ -1,15 +1,20 @@
 #!/bin/sh
 set -e
 prefix=/usr/local
+includes=
 while [ $# -gt 0 ]; do
   argument=$1
   shift
   if echo $argument | grep -q '^--prefix='; then
-    prefix=$(echo $argument | sed 's/^--prefix=//g')
+    prefix=$(echo $argument | sed 's|^--prefix=||g')
+  elif echo $argument | grep -q '^--with-mk='; then
+    includes="-I $(echo $argument | sed 's|^--with-mk=||g')"
   else
     echo "$0: unused argument: $argument"
   fi
 done
+echo "includes: $includes"
 echo "prefix: $prefix"
-cat Makefile.in | sed "s|@PREFIX@|$prefix|g" > Makefile
+cat Makefile.in | sed -e "s|@PREFIX@|$prefix|g" -e "s|@INCLUDES@|$includes|g"  \
+                > Makefile
 echo "Done."
