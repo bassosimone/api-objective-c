@@ -8,8 +8,8 @@ PREFIX = @PREFIX@
 WARNINGS = -Wall -Wextra
 #FFLAGS = -fsanitize=address -fobjc-arc
 FFLAGS = -fobjc-arc
-COMPILE = $(CC) $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(FFLAGS) $(INCLUDES)
-COMPILEXX = $(CXX) -std=c++11 $(CPPFLAGS) $(CXXFLAGS) $(WARNINGS) $(FFLAGS) $(INCLUDES)
+COMPILE = $(CC) -I. $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(FFLAGS) $(INCLUDES)
+COMPILEXX = $(CXX) -I. -std=c++11 $(CPPFLAGS) $(CXXFLAGS) $(WARNINGS) $(FFLAGS) $(INCLUDES)
 LINK = $(CXX) $(FFLAGS) -framework Foundation -lmeasurement_kit
 
 all: $(LIBRARY)
@@ -32,13 +32,13 @@ install-strip: install
 EXAMPLES = example_ndt_task example_web_connectivity_task
 examples: $(EXAMPLES)
 
-example_ndt_task.o: example_ndt_task.m
-	$(COMPILE) -o example_ndt_task.o -c example_ndt_task.m
+example_ndt_task.o: example/task/ndt.m
+	$(COMPILE) -o example_ndt_task.o -c example/task/ndt.m
 example_ndt_task: example_ndt_task.o $(LIBRARY)
 	$(LINK) -o example_ndt_task example_ndt_task.o $(LIBRARY)
 
-example_web_connectivity_task.o: example_web_connectivity_task.m
-	$(COMPILE) -o example_web_connectivity_task.o -c example_web_connectivity_task.m
+example_web_connectivity_task.o: example/task/web_connectivity.m
+	$(COMPILE) -o example_web_connectivity_task.o -c example/task/web_connectivity.m
 example_web_connectivity_task: example_web_connectivity_task.o $(LIBRARY)
 	$(LINK) -o example_web_connectivity_task example_web_connectivity_task.o $(LIBRARY)
 
