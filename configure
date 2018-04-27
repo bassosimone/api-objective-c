@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+prefix=/usr/local
+while [ $# -gt 0 ]; do
+  argument=$1
+  shift
+  if echo $argument | grep -q '^--prefix='; then
+    prefix=$(echo $argument | sed 's/^--prefix=//g')
+  else
+    echo "$0: unused argument: $argument"
+  fi
+done
+echo "prefix: $prefix"
+cat Makefile.in | sed "s|@PREFIX@|$prefix|g" > Makefile
+echo "Done."
