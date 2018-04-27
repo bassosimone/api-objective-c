@@ -1,3 +1,5 @@
 /Makefile
+/example_ndt_task
+/example_web_connectivity_task
 *.a
 *.o

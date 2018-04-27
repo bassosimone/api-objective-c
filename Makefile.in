@@ -1,11 +1,16 @@
-.PHONY: all clean install install-strip
+.PHONY: all clean install install-strip examples
 
 INCLUDES = @INCLUDES@
 LIBRARY = libmeasurementkit-objectivec.a
 OBJS = mk_task.o
 PREFIX = @PREFIX@
 
-COMPILEXX = $(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wall -Wextra $(INCLUDES)
+WARNINGS = -Wall -Wextra
+#FFLAGS = -fsanitize=address -fobjc-arc
+FFLAGS = -fobjc-arc
+COMPILE = $(CC) $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(FFLAGS) $(INCLUDES)
+COMPILEXX = $(CXX) -std=c++11 $(CPPFLAGS) $(CXXFLAGS) $(WARNINGS) $(FFLAGS) $(INCLUDES)
+LINK = $(CXX) $(FFLAGS) -framework Foundation -lmeasurement_kit
 
 all: $(LIBRARY)
 
@@ -20,8 +25,22 @@ install: $(LIBRARY)
 	install -d $(DESTDIR)/$(PREFIX)/lib
 	install -m644 $(LIBRARY) $(DESTDIR)/$(PREFIX)/lib
 
-# TODO(bassosimone): figure out if we can really strip
+# TODO(bassosimone): understand why `install -s` fails. Until this point, just
+# keep install-strip as an alias to install.
 install-strip: install
 
+EXAMPLES = example_ndt_task example_web_connectivity_task
+examples: $(EXAMPLES)
+
+example_ndt_task.o: example_ndt_task.m
+	$(COMPILE) -o example_ndt_task.o -c example_ndt_task.m
+example_ndt_task: example_ndt_task.o $(LIBRARY)
+	$(LINK) -o example_ndt_task example_ndt_task.o $(LIBRARY)
+
+example_web_connectivity_task.o: example_web_connectivity_task.m
+	$(COMPILE) -o example_web_connectivity_task.o -c example_web_connectivity_task.m
+example_web_connectivity_task: example_web_connectivity_task.o $(LIBRARY)
+	$(LINK) -o example_web_connectivity_task example_web_connectivity_task.o $(LIBRARY)
+
 clean:
-	rm -rf -- $(OBJS) $(LIBRARY)
+	rm -rf -- $(OBJS) $(LIBRARY) $(EXAMPLES)

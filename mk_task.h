@@ -34,7 +34,4 @@
 /// Interrupts a running task. If a taks is not running, does nothing.
 - (void)interrupt;
 
-/// Deallocates a task.
-- (void)dealloc;
-
 @end
