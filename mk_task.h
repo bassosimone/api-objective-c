@@ -26,12 +26,12 @@
 /// Returns YES if the task is done, NO otherwise.
 - (BOOL)isDone;
 
-/// Blocks until the task emits the next event. @return a valid pointer to
+/// Blocks until the task emits the next event. @returns a valid pointer to
 /// a dictionary containing the event that occurred, unless there is a failure
 /// that causes `nil` to be returned instead.
 - (NSDictionary *)waitForNextEvent;
 
-/// Interrupts a running task. If a taks is not running, does nothing.
+/// Interrupts a running task. If a task is not running, does nothing.
 - (void)interrupt;
 
 @end
