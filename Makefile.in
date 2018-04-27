@@ -9,7 +9,7 @@ all: $(LIBRARY)
 $(LIBRARY): $(OBJS)
 	$(AR) rv $(LIBRARY) $(OBJS)
 mk_task.o: mk_task.h mk_task.mm
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o mk_task.o -c mk_task.mm
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wall -Wextra -o mk_task.o -c mk_task.mm
 
 install:
 	install -d $(DESTDIR)/$(PREFIX)/include
