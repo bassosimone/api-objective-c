@@ -29,18 +29,18 @@ install: $(LIBRARY)
 # keep install-strip as an alias to install.
 install-strip: install
 
-EXAMPLES = example_ndt_task example_web_connectivity_task
+EXAMPLES = example/task/ndt example/task/web_connectivity
 examples: $(EXAMPLES)
 
-example_ndt_task.o: example/task/ndt.m
-	$(COMPILE) -o example_ndt_task.o -c example/task/ndt.m
-example_ndt_task: example_ndt_task.o $(LIBRARY)
-	$(LINK) -o example_ndt_task example_ndt_task.o $(LIBRARY)
+example/task/ndt.o: example/task/ndt.m
+	$(COMPILE) -o example/task/ndt.o -c example/task/ndt.m
+example/task/ndt: example/task/ndt.o $(LIBRARY)
+	$(LINK) -o example/task/ndt example/task/ndt.o $(LIBRARY)
 
-example_web_connectivity_task.o: example/task/web_connectivity.m
-	$(COMPILE) -o example_web_connectivity_task.o -c example/task/web_connectivity.m
-example_web_connectivity_task: example_web_connectivity_task.o $(LIBRARY)
-	$(LINK) -o example_web_connectivity_task example_web_connectivity_task.o $(LIBRARY)
+example/task/web_connectivity.o: example/task/web_connectivity.m
+	$(COMPILE) -o example/task/web_connectivity.o -c example/task/web_connectivity.m
+example/task/web_connectivity: example/task/web_connectivity.o $(LIBRARY)
+	$(LINK) -o example/task/web_connectivity example/task/web_connectivity.o $(LIBRARY)
 
 clean:
 	rm -rf -- $(OBJS) $(LIBRARY) $(EXAMPLES)

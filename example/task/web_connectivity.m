@@ -6,10 +6,10 @@
 
 int main() {
   @autoreleasepool {
-    NSString *verbosity = @"INFO";
+    NSString *log_level = @"INFO";
     NSDictionary *settings = @{
       @"name" : @"WebConnectivity",
-      @"verbosity" : verbosity,
+      @"log_level" : log_level,
       @"options" : @{
         @"save_real_probe_asn" : @TRUE,
         @"save_real_probe_cc" : @TRUE,
